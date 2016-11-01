@@ -107,9 +107,15 @@ func (self Value) Write(writer io.Writer) error {
 	encoder := xml.NewEncoder(writer)
 	elem := xml.StartElement{Name: xml.Name{Local: "plist"}, Attr: []xml.Attr{{Name: xml.Name{Space: "", Local: "version"}, Value: "1.0"}}}
 	encoder.Indent("", "  ")
-	encoder.EncodeToken(elem)
-	self.writeXml(encoder)
-	encoder.EncodeToken(elem.End())
+	if err := encoder.EncodeToken(elem); err != nil {
+		return err
+	}
+	if err := self.writeXml(encoder); err != nil {
+		return err
+	}
+	if err := encoder.EncodeToken(elem.End()); err != nil {
+		return err
+	}
 	return encoder.Flush()
 }
 
@@ -129,9 +135,7 @@ func (self Value) writeXml(encoder *xml.Encoder) error {
 				return err
 			}
 		}
-		if err := encoder.EncodeToken(elem.End()); err != nil {
-			return err
-		}
+		return encoder.EncodeToken(elem.End())
 	case DictType:
 		elem := xml.StartElement{Name: xml.Name{Local: "dict"}}
 		if err := encoder.EncodeToken(elem); err != nil {
