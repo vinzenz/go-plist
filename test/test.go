@@ -41,9 +41,8 @@ const exampleData = `<?xml version="1.0" encoding="UTF-8"?>
 </plist>`
 
 func main() {
-	x, e := plist.Read(bytes.NewReader([]byte(exampleData)))
-	if e != nil {
-		fmt.Printf("ERROR: %s\n", e.Error())
+	if x, err := plist.Read(bytes.NewReader([]byte(exampleData))); err != nil {
+		fmt.Printf("ERROR: %s\n", err.Error())
 	} else {
 		json.NewEncoder(os.Stdout).Encode(x)
 		json.NewEncoder(os.Stdout).Encode(x.Raw())
