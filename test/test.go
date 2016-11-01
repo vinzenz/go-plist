@@ -1,3 +1,6 @@
+// Copyright 2016 Vinzenz Feenstra. All rights reserved.
+// Use of this source code is governed by a BSD-2-clause
+// license that can be found in the LICENSE file.
 package main
 
 import (
@@ -6,7 +9,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/vinzenz/dbright/aquatic-prime/plist"
+	"github.com/vinzenz/go-plist"
 )
 
 const hardValid1Test = `<?xml version="1.0" encoding="UTF-8"?>
